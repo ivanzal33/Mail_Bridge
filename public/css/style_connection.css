@@ -1,0 +1,260 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+
+.scroll-container {
+    flex: 1;
+    overflow-y: auto;
+}
+
+#side-menu-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+.account-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+
+body {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    min-height: 100vh;
+    background: salmon;
+    background: url('../images/conn.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.alert-success {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* Основной контейнер */
+.container {
+    height: 500px;
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+/* Стили для заголовка MailBridge */
+h1 {
+    font-size: 50px;/*размер шрифта*/
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /*тень*/
+}
+
+/* Стили для кнопок выбора почт и мессенджеров */
+.tabs {
+    display: flex;
+    flex-direction: column; /* Меняем на колонку, чтобы элементы шли в столбик */
+    align-items: center; /* Центрируем кнопки по горизонтали */
+    gap: 40px; /* Добавляем промежутки между кнопками */
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: white;
+    border-radius: 15px;
+    font-size: 30px;/*размер шрифта*/
+    height: 70px;
+    width: 250px; /* Можно задать фиксированную ширину для кнопок */
+    text-align: center; /* Центрируем текст в кнопке */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /*тень*/
+    box-shadow: 0 0 10px rgb(0, 0, 0, .1);
+    background: #00a1e0;
+    border: 2px solid #80daeb;
+}
+
+.tab:hover {
+    background-color: #38b3ff; /* Цвет фона при наведении */
+}
+.back-button {
+    background-color: #ff6347; /* Красный цвет фона для кнопки "Назад" */
+    border-color: #ff7f50; /* Оранжевый цвет рамки для кнопки "Назад" */
+    color: white; /* Белый текст */
+}
+
+.back-button:hover {
+    background-color: #ff4500; /* Оранжевый цвет фона при наведении */
+}
+
+
+/* Меню слева */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -650px; /* Скрыто по умолчанию */
+    width: 650px;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    color: #ffffff;
+    transition: left 0.4s ease;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+/* Закрытие меню */
+.close-menu {
+    font-size: 30px;/* размер крестика*/
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.side-menu h2 {
+    text-align: center;
+}
+
+/* Форма для ввода данных */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-container input {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+}
+
+.form-container button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #45a049;
+}
+
+/* Список почт и мессенджеров */
+.account-list {
+    list-style-type: none;
+    padding: 8px;
+    margin: 0;
+    color: #000000;
+}
+
+.account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.account-item button {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    height: 25px;
+    width: 75px;
+    border-radius: 7px;
+    flex-direction: row;
+}
+
+.account-item button:hover {
+    background-color: #e53935;
+}
+
+
+
+/* Стили для выпадающего списка */
+#messenger-select {
+    appearance: none; /* Убираем стандартный стиль браузера */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px 30px 10px 10px; /* Добавляем отступы для текста и стрелки */
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.3s ease; /* Плавная смена границы */
+}
+
+/* Стиль при наведении на выпадающий список */
+#messenger-select:hover {
+    border-color: #00a1e0;
+}
+
+/* Стиль при фокусировке */
+#messenger-select:focus {
+    outline: none;
+    border-color: #00a1e0;
+}
+
+/* Стиль стрелки выпадающего списка */
+#messenger-select::-ms-expand {
+    display: none;
+}
+
+#messenger-select::after {
+    content: '\2193'; /* Стрелка вниз */
+    font-size: 16px;
+    color: #333;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Анимация для плавного раскрытия */
+#messenger-select option {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+#messenger-select option:hover {
+    background-color: #f1f1f1;
+}
+
+

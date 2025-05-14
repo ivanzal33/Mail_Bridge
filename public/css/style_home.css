@@ -1,0 +1,82 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: url('../images/home.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Шапка с логотипом и кнопками */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Кнопки */
+.auth-buttons .btn {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.auth-buttons .btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Размытый контейнер */
+.blur-container {
+
+    margin-top: 60px;
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 40px;
+}
+
+.content {
+    width: 100%;
+    max-width: 2000px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    color: white;
+    overflow-y: auto;
+    line-height: 1.8;
+}
