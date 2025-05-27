@@ -30,8 +30,8 @@ Route::group([
     Route::post('/create', 'createUser')->name('createUser');
     Route::post('/login', 'loginUser')->name('loginUser');
     Route::post('/logout', 'logoutUser')->name('logoutUser');
+    Route::post('/verify-2fa', 'verifyTwoFactor')->name('verify2fa');
 });
-
 
 // Страницы для авторизованных пользователей
 Route::middleware('auth')->group(function () {

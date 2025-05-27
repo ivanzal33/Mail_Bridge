@@ -7,9 +7,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Email;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function createUser(CreateUserRequest $request)
@@ -47,33 +47,66 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
 
-        if (auth()->attempt([
-            'username' => $validated['username'],
-            'password' => $validated['password']
-        ])) {
-            $user = auth()->user();
+        $user = User::where('username', $validated['username'])->first();
 
-            // Подгружаем связи
-            session([
-                'emails'     => $user->emails,
-                'messengers' => $user->messengers,
-            ]);
-
-            // Выбираем куда редиректить
-            $redirect = $user->isAdmin()
-                ? route('admin.dashboard')
-                : route('communications');
-
+        // Проверка пароля вручную!
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             return response()->json([
-                'message'  => 'Успешный вход',
-                'redirect' => $redirect
-            ], 200);
+                'detail' => 'Неверный логин или пароль'
+            ], 401);
         }
 
+        // Генерируем и отправляем код на email
+        $user->generateTwoFactorCode();
+
+        // Сохраняем статус в сессии, что ждем 2fa
+        session(['2fa:user_id' => $user->id]);
+
+        // Отправляем ответ, что требуется 2fa
         return response()->json([
-            'detail' => 'Неверный логин или пароль'
-        ], 401);
+            'message' => 'Требуется подтверждение через email-код',
+            'two_factor' => true
+        ], 200);
     }
+
+
+
+    public function verifyTwoFactor(Request $request)
+    {
+        $request->validate([
+            'two_factor_code' => 'required|digits:6',
+        ]);
+
+        $userId = session('2fa:user_id');
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['detail' => 'Пользователь не найден'], 401);
+        }
+
+        if (
+            $user->two_factor_code !== $request->two_factor_code ||
+            now()->gt($user->two_factor_expires_at)
+        ) {
+            return response()->json(['detail' => 'Код недействителен или истёк'], 401);
+        }
+
+        // Только здесь логиним пользователя!
+        auth()->login($user);
+        $user->resetTwoFactorCode();
+        session()->forget('2fa:user_id');
+
+        $redirect = $user->isAdmin()
+            ? route('admin.dashboard')
+            : route('communications');
+
+        return response()->json([
+            'message'  => 'Двухфакторная аутентификация успешна',
+            'redirect' => $redirect
+        ], 200);
+    }
+
+
 
 
     public function LogoutUser()

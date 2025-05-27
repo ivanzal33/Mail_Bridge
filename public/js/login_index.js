@@ -79,6 +79,7 @@ function checkLock() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("121212")
     const form = document.getElementById('login-form');
 
     form.addEventListener('submit', async function (event) {
@@ -115,10 +116,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = await response.json();
 
             if (response.ok) {
+                console.log("я тут")
                 localStorage.removeItem("loginAttempts");
-                // Перенаправляем туда, что отдал сервер
-                window.location.href = result.redirect;
-            } else {
+                if (result.two_factor) {
+                    showTwoFactorModal(); // Показываем форму для ввода кода
+                } else if (result.redirect) {
+                    window.location.href = result.redirect; // Только если redirect реально есть!
+                }
+            }
+            else {
                 setAttempts(getAttempts() + 1);
                 const remaining = maxAttempts - getAttempts();
                 alert(`Ошибка: ${result.detail || "Неверный логин или пароль"}. Осталось попыток: ${remaining}`);
@@ -129,6 +135,43 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+function showTwoFactorModal() {
+    document.getElementById('twoFactorModal').classList.add('active');
+}
+
+function hideTwoFactorModal() {
+    document.getElementById('twoFactorModal').classList.remove('active');
+}
+
+
+async function submitTwoFactorCode() {
+    const code = document.getElementById('twoFactorInput').value;
+    const errorDiv = document.getElementById('twoFactorError');
+
+    try {
+        const response = await fetch('/auth/verify-2fa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ two_factor_code: code })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.redirect) {
+            hideTwoFactorModal();
+            window.location.href = result.redirect;
+        } else {
+            errorDiv.textContent = result.detail || 'Код неверный или истёк';
+        }
+    } catch (error) {
+        errorDiv.textContent = "Ошибка соединения!";
+    }
+}
 
 
 checkLock(); // Запускаем при загрузке

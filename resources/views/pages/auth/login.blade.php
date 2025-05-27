@@ -2,6 +2,7 @@
 @section('title', 'Авторизация')
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/style_login_register.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/two_factor_modal.css') }}">
 @endsection
 @section('script')
     <script src="{{ asset('js/login_index.js') }}"></script>
@@ -51,5 +52,17 @@
             </div>
         </form>
     </div>
+
+
+    <div id="twoFactorModal">
+        <div class="twofactor-box">
+            <button class="twofactor-close" onclick="hideTwoFactorModal()" title="Закрыть">&times;</button>
+            <h3>Введите код из письма</h3>
+            <input type="text" id="twoFactorInput" maxlength="6" autocomplete="one-time-code">
+            <div id="twoFactorError"></div>
+            <button type="button" class="twofactor-btn" onclick="submitTwoFactorCode()">Подтвердить</button>
+        </div>
+    </div>
+
 @endsection
 

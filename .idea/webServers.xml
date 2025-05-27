@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="83a0b269-5d75-4816-80d9-f52c4650c7ea" name="MailBridje">
+        <fileTransfer rootFolder="/home/p/pozitivmr1/mailbridje_ru" accessType="SFTP" host="77.222.40.47" port="22" sshConfigId="23059bfc-2612-4a38-bdaa-45238ba3c5e7" sshConfig="pozitivmr1@77.222.40.47:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
